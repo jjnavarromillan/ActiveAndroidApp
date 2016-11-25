@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextLastName;
     Button buttonAdd;
     TextView textViewMessage;
+    EmployeeItemAdapter employeeItemAdapter;
+    ListView ListViewEmployees;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         editTextLastName = (EditText) findViewById(R.id.editTextLastName);
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         textViewMessage = (TextView) findViewById(R.id.textViewMessage);
+        ListViewEmployees = (ListView) findViewById(R.id.ListViewEmployees);
+        viewList();
 
     }
 
@@ -42,10 +47,16 @@ public class MainActivity extends AppCompatActivity {
             editTextFirstName.setText("");
             editTextLastName.setText("");
             textViewMessage.setText("Employee Added "+employee.FirstName + " "+ employee.LastName + " => total Employees "+Employee.getAllEmployees().size());
+            viewList();
 
         }
         else {
             textViewMessage.setText("Must add FirstName and LastName");
         }
+    }
+    public void viewList(){
+        employeeItemAdapter = new EmployeeItemAdapter(this,Employee.getAllEmployees());
+        ListViewEmployees.setAdapter(employeeItemAdapter);
+
     }
 }
